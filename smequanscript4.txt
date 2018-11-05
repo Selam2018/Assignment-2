@@ -20,7 +20,7 @@ SELECT * FROM Sales;
 
 -- listing customers who spent more than 100 dollars
 SELECT * FROM Sales 
-WHERE Total>100;
+WHERE TotalAmount>100;
 
 
 
@@ -29,7 +29,8 @@ DELETE FROM product
 WHERE description='Shoes';
 
 -- Proving that it is deleted
-SELECT * FROM product;
+SELECT * FROM product
+WHERE description='Shoes';
 
 -- Trying to delete agents from Springfield
 DELETE FROM agent
@@ -38,4 +39,4 @@ WHERE agentcity='Springfield';
 -- The row for agent table was not deleted because it is linked to/used 
 -- in customer table as a foreign key; foreign key constraint was applied to prevent
 -- the deletion that destroys the linkage between agent and customer tables
----thus, 
+

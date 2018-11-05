@@ -1,7 +1,6 @@
 USE smequanassign2db;
-LOAD DATA LOCAL INFILE '~/assignment2/Assignment-2/loaddatafall2018.txt' INTO TABLE product
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INFILE 'loaddatafall2018.txt' INTO TABLE product
+FIELDS TERMINATED BY ',';
 SELECT * FROM product;
 INSERT INTO product VALUES('66','Elbow pads','14.25','120');
 INSERT INTO product VALUES('10','Shoes', '50.99', '100');
