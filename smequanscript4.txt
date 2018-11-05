@@ -1,0 +1,41 @@
+USE smequanassign2db;
+-- showing data in all four tables
+SELECT * FROM product;
+SELECT * FROM customer;
+SELECT * FROM agent;
+SELECT * FROM purchase;
+
+-- Creating a View
+CREATE VIEW Sales AS 
+SELECT customer.firstname, customer.lastname, product.description, 
+purchase.quantity, product.cost as UnitCost, purchase.quantity*product.cost as TotalAmount
+FROM customer, product, purchase
+WHERE customer.customerid=purchase.customerid 
+AND product.productid=purchase.productid
+ORDER BY customer.lastname;
+
+
+-- Prove that the view is created
+SELECT * FROM Sales;
+
+-- listing customers who spent more than 100 dollars
+SELECT * FROM Sales 
+WHERE Total>100;
+
+
+
+-- Deleting my made up product
+DELETE FROM product 
+WHERE description='Shoes';
+
+-- Proving that it is deleted
+SELECT * FROM product;
+
+-- Trying to delete agents from Springfield
+DELETE FROM agent
+WHERE agentcity='Springfield';
+
+-- The row for agent table was not deleted because it is linked to/used 
+-- in customer table as a foreign key; foreign key constraint was applied to prevent
+-- the deletion that destroys the linkage between agent and customer tables
+---thus, 

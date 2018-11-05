@@ -1,0 +1,77 @@
+USE smequanassign2db;
+-- Query 1
+SELECT description FROM product;
+
+-- Query 2
+SELECT DISTINCT custcity FROM customer ;
+
+-- Query 3
+SELECT * FROM agent ORDER BY agentcity;
+
+-- Query 4
+SELECT firstname, lastname FROM customer WHERE custcity='Springfield';
+
+-- Query 5
+SELECT lastname FROM customer 
+WHERE agentid IN (SELECT agentid FROM agent 
+WHERE firstname='Regis');
+
+-- Query 6
+SELECT description FROM product WHERE description LIKE '%Pad%';
+
+-- Query 7
+SELECT customer.lastname, product.description,purchase.quantity 
+FROM customer, product, purchase 
+WHERE product.productid = purchase.productid AND customer.customerid = purchase.customerid;
+
+-- Query 8
+SELECT SUM(purchase.quantity) AS "Homer's Total Purchases" 
+FROM purchase JOIN(SELECT purchase.productid,customer.customerid FROM customer, purchase 
+WHERE customer.customerid=purchase.customerid and firstname='Homer') sub 
+ON purchase.productid=sub.productid; 
+
+-- Query 9
+SELECT firstname, lastname, sum(quantity) as TotalProductsPurcahsed 
+FROM customer, purchase 
+WHERE customer.customerid=purchase.customerid
+GROUP BY customer.customerid;
+
+-- Query 10
+SELECT description,quantity FROM product 
+WHERE productid NOT IN (SELECT productid FROM purchase);
+
+-- Query 11
+SELECT description,quantity FROM product
+WHERE productid NOT IN (SELECT productid FROM purchase
+WHERE customerid IN (SELECT customerid FROM customer 
+WHERE firstname='Fred' AND lastname='Flintstone'));
+
+-- Query 12
+SELECT customer.firstname as CustomerFirstName, customer.lastname as CustomerLastName,agent.firstname as AgentFirstName, agent.lastname as AgentLastName 
+FROM customer, agent
+WHERE custcity=agentcity and agent.agentid=customer.agentid;
+
+-- Query 13
+SELECT SUM(quantity) AS "Total Knee pads sold" FROM purchase 
+WHERE productid IN (SELECT productid FROM product
+WHERE description='Knee Pads');
+
+-- Query 14 
+SELECT description FROM product 
+WHERE productid IN(SELECT productid FROM purchase
+HAVING count(DISTINCT purchase.customerid)>3);
+
+-- Query 15
+SELECT firstname, lastname FROM agent 
+WHERE agentid IN (SELECT agentid FROM customer 
+WHERE customerid IN (SELECT customerid FROM purchase 
+WHERE productid IN (SELECT productid FROM product 
+WHERE description='Knee Pads')));
+
+
+
+
+
+
+
+
